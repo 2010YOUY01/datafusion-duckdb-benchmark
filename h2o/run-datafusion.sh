@@ -22,14 +22,14 @@ cat queries-datafusion.sql | while read query; do
     if [ "$sweep_cores" == "multi" ]; then
         core_arr=(1 2 4 8 16 32 64 128)
     else
-        core_arr=(1)
+        core_arr=($sweep_cores)
     fi
 
     for c in ${core_arr[@]}; do
         echo -n "["
         for i in $(seq 1 $TRIES); do
             RES=`DATAFUSION_EXECUTION_TARGET_PARTITIONS=${c} ${DATAFUSION_CLI} -f ${CREATE} /tmp/query.sql 2>&1 | grep "Query took" | sed -n 2p | awk '{print $7}'`
-            
+
             # omit the first 2 cold starts
             if [[ $i -gt 2 ]]; then
                 [[ $RES != "" ]] && \

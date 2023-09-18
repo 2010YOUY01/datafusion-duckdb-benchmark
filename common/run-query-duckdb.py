@@ -20,14 +20,16 @@ result_file = sys.argv[3]
 if sweep_cores == "multi":
     cores = [1, 2, 4, 8, 16, 32, 64, 128]
 else:
-    cores = [1]
+    cores = [sweep_cores]
 
 for c in cores:
     for try_num in range(1, 6):
         # set number of cores
         con.execute("PRAGMA threads={}".format(c))
         start = timeit.default_timer()
-        results = con.execute(query).fetchall()
+
+        # don't concat .fetch_all(), it will count the time for printing
+        results = con.execute(query)
         end = timeit.default_timer()
 
         # omit the first 2 cold starts

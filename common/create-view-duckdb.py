@@ -10,9 +10,9 @@ con = duckdb.connect(database="my-db.duckdb", read_only=False)
 
 query = sys.stdin.read()
 
-print("Set up a view over the Parquet files")
+print("duckdb executing: " + query[:-1])
 
 start = timeit.default_timer()
 con.execute(query)
 end = timeit.default_timer()
-print(end - start)
+print("finished in " + str(end - start))

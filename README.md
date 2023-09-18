@@ -11,7 +11,7 @@ Benchmarking DataFusion and DuckDB over [ClickBench](https://benchmark.clickhous
 ```bash
 # install datafusion
 git clone https://github.com/apache/arrow-datafusion.git
-cd datafusion
+cd arrow-datafusion
 git checkout 29.0.0
 cargo install --path datafusion-cli
 
@@ -51,7 +51,12 @@ cd h2o/
 bash setup.sh
 
 # Run the benchmarks. Results will be written to h2o_datafusion.csv and h2o_duckdb.csv
-bash benchmark.sh [cores (single/multi)]
+#
+# arg [cores]:
+#   default - run benchmark with avaialble CPU cores
+#   single - run with single core
+#   multi - scalability test
+bash benchmark.sh [cores (single/multi/default)]
 
 # Plot the results. Currently supports only single comparison charts
 python3 plot.py
